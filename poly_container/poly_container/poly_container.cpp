@@ -17,9 +17,9 @@ void Seznam::print() {
 }
 
 Seznam& Seznam::operator=(Seznam other) {
-	vector <unique_ptr<AbstractVal>>temp;
-	for (auto it = storage_.begin(); it != storage_.end(); it++) {
-		temp.push_back(make_unique<AbstractVal>(it->get()));
+	storage_.clear();
+	for (auto it = other.storage_.begin(); it != other.storage_.end(); it++) {
+		it->get()->clone(storage_);
 	}
 	return *this;
 }

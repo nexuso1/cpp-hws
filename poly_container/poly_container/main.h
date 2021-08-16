@@ -7,14 +7,15 @@ class AbstractVal {
 public:
 	virtual void print() {};
 	virtual ~AbstractVal() {};
-	virtual AbstractVal* clone() const = NULL; // Note to self: =0(NULL) signifies a purely virtual function;
+	virtual void clone(std::vector<std::unique_ptr<AbstractVal>>& vec) const = 0; // Note to self: =0(NULL) signifies a purely virtual function;
 };
 
 class IntVal : public AbstractVal {
 public:
 	IntVal(int val) : val_(val) {};
-	IntVal* clone() const {
-		return new IntVal(val_);
+	void clone(std::vector<std::unique_ptr<AbstractVal>>& vec) const {
+		IntVal temp (val_);
+		vec.push_back(std::make_unique<IntVal>(temp));
 	}
 	inline void print() override {
 		std::cout << val_;
@@ -25,8 +26,9 @@ public:
 class DoubleVal : public AbstractVal {
 public:
 	DoubleVal(double val) : val_(val) {};
-	DoubleVal* clone() const {
-		return new DoubleVal(val_);
+	void clone(std::vector<std::unique_ptr<AbstractVal>>& vec) const {
+		DoubleVal temp(val_);
+		vec.push_back(std::make_unique<DoubleVal>(temp));
 	}
 	inline void print() override {
 		std::cout << val_;
@@ -38,8 +40,9 @@ public:
 class StringVal : public AbstractVal {
 public:
 	StringVal(std::string val) : val_(val) {};
-	StringVal* clone() const {
-		return new StringVal(val_);
+	void clone(std::vector<std::unique_ptr<AbstractVal>>& vec) const {
+		StringVal temp(val_);
+		vec.push_back(std::make_unique<StringVal>(temp));
 	}
 	inline void print() override {
 		std::cout << val_;
@@ -50,11 +53,12 @@ public:
 class ComplexVal : public AbstractVal {
 public:
 	ComplexVal(int real, int img) : real_(real), img_(img) {};
-	ComplexVal* clone() const {
-		return new ComplexVal(real_, img_);
+	void clone(std::vector<std::unique_ptr<AbstractVal>>& vec) const {
+		ComplexVal temp(real_, img_);
+		vec.push_back(std::make_unique<ComplexVal>(temp));
 	}
 	inline void print() override {
-		std::cout << real_ << '+' << img_;
+		std::cout << real_ << '+' << img_ << 'i';
 	};
 	int real_, img_;
 };
@@ -62,8 +66,9 @@ public:
 class FractionVal : public AbstractVal {
 public:
 	FractionVal(int num, int denom) : num_(num), denom_(denom) {};
-	FractionVal* clone() const {
-		return new FractionVal(num_, denom_);
+	void clone(std::vector<std::unique_ptr<AbstractVal>>& vec) const {
+		FractionVal temp(num_, denom_);
+		vec.push_back(std::make_unique<FractionVal>(temp));
 	}
 	inline void print() override {
 		std::cout << num_ << '/' << denom_;
@@ -75,7 +80,10 @@ class Seznam {
 public:
 	Seznam() {};
 	Seznam(Seznam& other) {
-		swap(storage_, other.storage_);
+		storage_.clear();
+		for (auto it = other.storage_.begin(); it != other.storage_.end(); it++) {
+			it->get()->clone(storage_);
+		}
 	};
 	void add(std::unique_ptr<AbstractVal> p);
 	void print();
