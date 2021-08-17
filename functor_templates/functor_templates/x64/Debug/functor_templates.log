@@ -1,0 +1,3 @@
+﻿  main.cpp
+x64\Debug\main.obj : warning LNK4042: object specified more than once; extras ignored
+  functor_templates.vcxproj -> C:\Users\Samo\Repos\functor_templates\x64\Debug\functor_templates.exe
