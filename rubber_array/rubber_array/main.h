@@ -21,7 +21,7 @@ public:
 
 	class iterator {
 	public:
-		iterator() {};
+		iterator() { pole_(nullptr); };
 		iterator(const iterator& it) {
 			pole_ = it.pole_;
 			end_ = it.end_;

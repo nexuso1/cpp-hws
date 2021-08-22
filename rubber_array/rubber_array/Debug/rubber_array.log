@@ -1,2 +1,6 @@
 ﻿  main.cpp
+C:\Users\Samo\Repos\cpp-hws\rubber_array\rubber_array\main.h(61,31): warning C4101: 'e': unreferenced local variable
+C:\Users\Samo\Repos\cpp-hws\rubber_array\rubber_array\main.h(54): message : while compiling class template member function 'Pole<double>::iterator Pole<double>::iterator::operator ++(void)'
+C:\Users\Samo\Repos\cpp-hws\rubber_array\rubber_array\main.cpp(34): message : see reference to function template instantiation 'Pole<double>::iterator Pole<double>::iterator::operator ++(void)' being compiled
+C:\Users\Samo\Repos\cpp-hws\rubber_array\rubber_array\main.cpp(34): message : see reference to class template instantiation 'Pole<double>::iterator' being compiled
   rubber_array.vcxproj -> C:\Users\Samo\Repos\cpp-hws\rubber_array\Debug\rubber_array.exe
